@@ -7,6 +7,30 @@
 python app.py
 ```
 
+增加config.py
+
+```
+host = '101.133.238.216'
+user = 'root'
+password = '####'
+port = '3306'
+db = 'flask_lte_cy'
+
+app_name = 'flask_lte_cy'
+
+import sys,platform
+current_system = platform.system()
+
+if current_system is 'Windows':
+    python = "python"
+else:
+    python = "python3"
+
+
+```
+
+
+
 
 
 ##### 文件说明
