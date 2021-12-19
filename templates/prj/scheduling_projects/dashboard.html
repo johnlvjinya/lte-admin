@@ -1,0 +1,191 @@
+{% extends 'base/base02.html' %}
+
+
+{% block vbox %}
+<a id="file_name" value=""></a>
+
+<div class="col-md-12 inbox_right">
+  <span class="label btn_6 label-default">项目名称：</span>&emsp;
+  <span class="label btn_6 label-default">创建时间：</span>&emsp;
+  
+  <span class="label btn_6 label-default">项目状态：</span>&emsp;
+  <span class="label btn_6 label-default">运行状态：</span>&emsp;
+  <span class="label btn_6 label-default">运行状态详情：</span>&emsp;
+  <span class="label btn_6 label-danger"><a onclick="delete_prj()" style="color:white">delete</a></span>&emsp;
+
+  <span class="label btn_6 label-info"><a style="color:white" href="#">**配置和校验数据</a></span>&emsp;   
+    
+  <script>
+      function delete_prj(){
+
+          var prj_name = document.getElementById('file_name').attributes["value"].value;
+          console.log('prj_name==========1', prj_name);
+
+          res = confirm('确认删除?');                 // 确认返回true，否则返回false
+          console.log('确认删除........');
+          if(res){
+              console.log('点击了是........') 
+              $.ajax({
+                  url:'/scheduling/delete_prj?prj_name='+prj_name+'&tb_name=scheduling_projects____prj_main',
+                  type:'POST',
+                  data: '',                
+                  success:function(res){
+                      console.log('ajax post -delete success');
+                      window.location.replace("/bulma_table/db_tb?tb_name=scheduling_projects____prj_main");
+                  },
+                  error:function (res) {
+                      console.log('ajax post -delete fail')
+                  }
+              });        
+          }else{
+              console.log('点击了否') 
+          }    
+      }
+  </script>
+</div>
+<br><br>
+
+<div class="col-sm-2">
+    <div class="col-sm-12">
+        <header class="panel-heading bg-light no-border">
+            <div class="clearfix">
+                <div class="h3 m-t-xs m-b-xs">
+                  <a style="font-size:22px">算法配置（预留！）</a>
+                  <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                </div>
+            </div>
+        </header>
+      
+        <br>
+        <form action="#" method="post" id="throughputRateForm" enctype="multipart/form-data">
+            <strong>OBJECTIVE</strong><br>
+                    延期时间:<input type="number" name="obj_f1" min="0" max="100" step="1" value="100">
+                    <br>
+                    完工时间:<input type="number" name="obj_f2" min="0" max="100" step="1" value="50">
+                    <br>
+            <strong>CONSTRAINS</strong><br>
+                    物料缺货约束:<input type="number" name="obj_f1" min="0" max="1" step="1" value="1">
+                    <br>
+                    设备数量约束:<input type="number" name="obj_f2" min="0" max="1" step="1" value="1">
+                    <br>
+                    人员数量约束:<input type="number" name="obj_f3" min="0" max="1" step="1" value="1">
+                    <br>  
+                    班组长数量约束:<input type="number" name="obj_f3" min="0" max="1" step="1" value="1">
+                    <br>
+                    操机手数量约束:<input type="number" name="obj_f3" min="0" max="1" step="1" value="1">
+                    <br>                    
+        <br>
+        </form>
+ 
+    </div>
+
+
+
+    <div class="col-sm-12">
+        <header class="panel-heading bg-light no-border">
+            <div class="clearfix">
+                <div class="h3 m-t-xs m-b-xs">
+                  <a style="font-size:22px">运行配置</a>
+                  <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                </div>
+            </div>
+        </header>
+
+         <br>
+
+        <form action="#" method="post" id="throughputRateForm" enctype="multipart/form-data">
+            选择开始时间：<label for="meeting"></label><input name="start_run_time" type="datetime-local" value="1"/>
+            <br><br>
+            最大排产天数(天)：<input type="number" name="start_run_period" min="0" max="500" step="1" value="1">
+            <br><br>
+            求解时间上限(秒)：<input type="number" name="solve_max_time" min="0" max="10000" step="1" value="1">
+            <br>
+            
+            <span class="label btn_6 label-success"><button style="color:white;background: rgba(1,1,1,0);border:0px">运行</button></span>&emsp;<br>
+            
+
+        </form><br>
+
+    </div>
+
+    <div class="col-sm-12">
+        <header class="panel-heading bg-light no-border">
+            <div class="clearfix">
+                <div class="h3 m-t-xs m-b-xs">
+                  <a style="font-size:22px">求解结果</a>
+                  <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                </div>
+            </div>
+        </header>
+      
+        <span class="label btn_6 label-success">
+            <a style="color:white" onclick="openurl('#')">图1</a>
+        </span>&emsp;
+        <span class="label btn_6 label-success">
+            <a style="color:white" onclick="openurl('#')">图2</a>
+        </span>&emsp;
+        <span class="label btn_6 label-success">
+            <a style="color:white" onclick="openurl('#')">图3</a>
+        </span>&emsp;
+        
+        <br>
+
+        <span class="label btn_6 label-default">订单延期时间：</span>&emsp;<br>
+        <span class="label btn_6 label-default">订单完工时间：</span>&emsp;<br>
+        <span class="label btn_6 label-default">算法求解耗时：</span>&emsp;<br>
+        <span class="label btn_6 label-success"><a style="color:white" href="/scheduling/download_prj_output_excel_post?prj_name=">导出运行结果</a></span><br><br>  
+        <br>
+
+    </div>
+
+
+
+</div>
+
+
+<div class="col-sm-8">
+    <div class="col-sm-12">
+
+        <header class="panel-heading bg-light no-border">
+            <div class="clearfix">
+                <div class="h3 m-t-xs m-b-xs">
+                  <a style="font-size:22px">排产结果调整待完善中...</a>
+                  <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                </div>
+            </div>
+        </header>
+        <br><br>
+        <img src="/static/scheduling/gantt-drag.png" width="100%">
+
+    </div>
+
+
+</div>
+
+<div class="col-sm-2">
+    <div class="col-sm-12">
+
+        <header class="panel-heading bg-light no-border">
+            <div class="clearfix">
+                <div class="h3 m-t-xs m-b-xs">
+                  <a style="font-size:22px">排产调整后结果(待完善)...</a>
+                  <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                </div>
+            </div>
+        </header>
+
+        <span class="label btn_6 label-success">导出结果</span>&emsp;<br>
+        <span class="label btn_6 label-default">导出结果</span>&emsp;<br>
+        <span class="label btn_6 label-default">导出结果</span>&emsp;<br>        
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
+{% block script_foot %}
+
+{% endblock %}

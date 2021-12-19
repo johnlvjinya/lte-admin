@@ -1,0 +1,77 @@
+
+{% extends 'base/base03_nav.html' %}
+
+{% block content%}
+
+  <div class="content-wrapper">
+  <section class="content">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">表格列表</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            {% for tb in db_info %}
+              <a href="/ljy_tb/db_tb?tb_name={{tb}}">{{tb}}</a><br>
+            {% endfor %}
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header p-2">
+            <ul class="nav nav-pills">
+              {% for tb in db_info %}
+
+                <li class="nav-item"><a class="nav-link" href="#{{tb}}" data-toggle="tab">{{tb}}</a></li>
+              {% endfor %}
+
+            </ul>
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              {% for tb in db_info %}
+              <div class="tab-pane" id="{{tb}}">
+
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>字段</th>
+                      <th>中文</th>
+                      <th>类型</th>                  
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                      {% for col in db_info[tb] %} 
+                      <tr>
+                          <td>{{col.name}}</td>
+                          <td>{{col.comment}}</td>
+                          <td>{{col.type}}</td>
+                      </tr>
+                      {%  endfor %} 
+                  </tbody>
+                </table>                
+                
+              </div>
+              {% endfor %}
+
+
+            </div>
+            <!-- /.tab-content -->
+          </div><!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </section>
+    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+  </div>
+
+{% endblock %}

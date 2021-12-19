@@ -1,0 +1,59 @@
+
+{% extends 'base/base02.html' %}
+
+
+{% block vbox%}
+  <section id="content">
+    <section class="vbox">
+      <section class="scrollable padder">
+        <div class="m-b-md">
+
+
+        <div class="col-sm-12">
+          <section class="panel panel-default">
+
+            <header class="panel-heading">
+              <span class="label bg-info pull-left xs">功能按键列表</span>
+
+            </header>              
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>功能</th>
+                  <th>地址</th>
+                  <th>运行</th>
+                  <th>备注</th>                     
+                </tr>
+              </thead>
+
+              <tbody>
+                  <tr>
+                      <td>根据AutoHtmlContainers生成页面</td>
+                      <td> /v_echarts/refresh_auto_html_containers </td>
+                      <td><a href="/v_echarts/refresh_auto_html_containers"><span class="label bg-info pull-left xs">运行</span></a></td>
+                      <td><a href="/bulma_table/db_tb?tb_name=autohtmlcontainers"><span class="label bg-success pull-left xs">配置表</span></a></td>
+                  </tr>
+
+                  <tr>
+                      <td>生成echarts示例列表</td>
+                      <td> /v_echarts/create_autohtml_echarts_sample </td>
+                      <td><a href="/v_echarts/create_autohtml_echarts_sample"><span class="label bg-info pull-left xs">运行</span></a></td>
+                      <td><a href="/bulma_table/db_tb?search_info=echarts_samples&tb_name=autohtmlcontainers"><span class="label bg-info pull-left xs">查看数据</span></a></td>
+
+                  </tr>
+
+
+              </tbody>
+              
+            </table>
+            
+          </section>
+        </div>
+
+
+
+
+      </section>
+    </section>
+  </section>
+{% endblock %}

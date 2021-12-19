@@ -1,0 +1,222 @@
+{% extends 'base/base03_nav.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+
+<section class="content">
+    <a id="file_name" value="{{prj_name}}"></a>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card  collapsed-card" >
+              <div class="card-header p-2">
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                  </button>
+                </div>
+
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link" href="#prj_manage" data-toggle="tab">项目配置</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">运行配置</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">运行结果</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="prj_manage">
+                      <a onclick="delete_prj()" ><strong><i class="fas fa-trash text-danger"></i>&ensp;删除项目</strong></a>
+                      <script>
+                          function delete_prj(){
+
+                              var prj_name = document.getElementById('file_name').attributes["value"].value;
+                              console.log('prj_name==========1', prj_name);
+
+                              res = confirm('确认删除?');                 // 确认返回true，否则返回false
+                              console.log('确认删除........');
+                              if(res){
+                                  console.log('点击了是........') 
+                                  $.ajax({
+                                      url:'/sjtu_carbon_emission/delete_prj?prj_name='+prj_name+'&tb_name=sjtu_carbon_emission____prj_main',
+                                      type:'POST',
+                                      data: '',                
+                                      success:function(res){
+                                          console.log('ajax post -delete success');
+                                          window.location.replace("/ljy_tb/db_tb?tb_name=sjtu_carbon_emission____prj_main");
+                                      },
+                                      error:function (res) {
+                                          console.log('ajax post -delete fail')
+                                      }
+                                  });        
+                              }else{
+                                  console.log('点击了否') 
+                              }    
+                          }
+                      </script>
+
+                      <hr>
+                      <span><a href="/ljy_tb/db_tb?tb_name=sjtu_carbon_emission_input1_region_msw_generation&prj_name={{prj_name}}&sub_tb_list_str=sjtu_carbon_emission_input1_region_msw_generation-sjtu_carbon_emission_input2_region_info-sjtu_carbon_emission_input3_regionfactor-sjtu_carbon_emission_input4_region_detail-sjtu_carbon_emission_output1_carbon_emission_result&prj_type=sjtu_carbon_emission____prj_main&prj_type_short=sjtu_carbon_emission">**配置和校验数据</a></span><br>
+                    </div>                  
+                    <div class="tab-pane" id="activity">
+                        <form action="{{ url_for('sjtu_carbon_emission.run_prj',prj_name=prj_name) }}" method="post" id="throughputRateForm" enctype="multipart/form-data">
+                            选择参数：<label for="meeting"></label><input name="ssp" type="text" value="预留" placeholder="ssp(可选)"/>
+
+                            <br><br>
+                            {%if prj_run_response_text=='正在运行' %}
+                            <span class="btn btn-danger "><button disabled="disabled" style="color:white;background: rgba(1,1,1,0);border:0px">运行中请等待...</button></span>&emsp;<br>
+                            {%else%}
+                            <span class="btn btn-info"><button style="color:white;background: rgba(1,1,1,0);border:0px">运行</button></span>&emsp;<br>
+                            {%endif%}
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="timeline">
+
+                      <form action="{{url_for('sjtu_carbon_emission.download_res_data', prj_name=prj_name)}}" method="POST">
+
+                        <div class="card-footer">
+                          <button type="submit" class="btn btn-danger">导出结果</button>
+                        </div>
+
+                      </form>
+
+
+
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>          
+        </div>
+
+        <div class="row">
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">项目名称</span>
+                <span class="info-box-number">
+                  {{prj_name}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">创建时间</span>
+                <span class="info-box-number">{{prj_create_t}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">项目状态</span>
+                <span class="info-box-number">{{prj_process_text}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">运行状态</span>
+                <span class="info-box-number">{{prj_run_state_text}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#g1" data-toggle="tab">Sankey图</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#g2" data-toggle="tab">热力图</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#g3" data-toggle="tab">按年产量</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+
+              <div class="card-body">
+                <div class="tab-content">
+
+                    <div class="tab-pane active" id="g1">
+                      <div class="col-md-12">
+                          {% for col in col_list%}
+                            <a onclick="openurlfull('/sjtu_carbon_emission/sankey_col_html?prj_name={{prj_name}}&col_name={{col}}&ssp=HD')">{{en_cn_dict[col]}}</a>&emsp;
+                                
+                          {% endfor %}
+                          <hr>
+                          <!-- <h3>以焚烧处理为例</h3> -->
+                          <div class="col-md-12">
+                              <iframe src='/sjtu_carbon_emission/sankey_col_html?prj_name={{prj_name}}&col_name=e1&ssp=HD' frameborder="0" width="100%" height="1000px"></iframe>
+                          </div>
+
+                      </div>                    
+                    </div>
+
+                    <div class="tab-pane" id="g2">
+                      <div class="col-md-12">
+                          {% for col in col_list%}
+                            <a onclick="openurlfull('/sjtu_carbon_emission/map_heat_china_html?prj_name={{prj_name}}&col_name={{col}}&ssp=HD')">{{en_cn_dict[col]}}</a>&emsp;
+                          {% endfor %}
+
+                          <hr>
+                          <!-- <h3>以焚烧处理为例</h3> -->
+                          <div class="col-md-12">
+                              <iframe src='/sjtu_carbon_emission/map_heat_china_html?prj_name={{prj_name}}&col_name=e1&ssp=HD' frameborder="0" width="100%" height="1000px"></iframe>
+                          </div>
+                                   
+                      </div>                      
+                    </div>
+
+                    <div class="tab-pane" id="g3">
+                      <div class="col-md-12">
+                          {% for year in year_list%}
+                            <a onclick="openurlfull('/sjtu_carbon_emission/bar_group_china_html?prj_name={{prj_name}}&year={{year}}&ssp=HD')">{{year}}</a>&emsp;
+                          {% endfor %}
+
+                          <hr>
+                          <h3>以2019为例</h3>
+                          <div class="col-md-12">
+                              <iframe src='/sjtu_carbon_emission/bar_group_china_html?prj_name={{prj_name}}&year=2019&ssp=HD' frameborder="0" width="100%" height="1000px"></iframe>
+                          </div>
+
+
+                      </div>  
+                    </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+    </div>
+
+
+
+</section>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,70 @@
+{
+  "legend_data": [
+    "values",
+    "values1",
+    "values2"
+  ],
+  "xAxis_data": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h"
+  ],
+  "series": [
+    {
+      "name": "values",
+      "type": "bar",
+      "emphasis": {
+        "focus": "series"
+      },
+      "data": [
+        50,
+        30,
+        3,
+        4,
+        13,
+        45,
+        14,
+        33
+      ]
+    },
+    {
+      "name": "values1",
+      "type": "bar",
+      "emphasis": {
+        "focus": "series"
+      },
+      "data": [
+        40,
+        23,
+        13,
+        41,
+        16,
+        45,
+        15,
+        13
+      ]
+    },
+    {
+      "name": "values2",
+      "type": "bar",
+      "emphasis": {
+        "focus": "series"
+      },
+      "data": [
+        30,
+        43,
+        13,
+        11,
+        26,
+        35,
+        25,
+        33
+      ]
+    }
+  ]
+}

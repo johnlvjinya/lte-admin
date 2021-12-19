@@ -1,0 +1,225 @@
+
+{% extends 'base/base03_nav.html' %}
+
+{% block top_nav %}
+{% endblock %}
+
+{% block searchform %}
+<form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search" action="/ljy_tb/db_search">
+  <div class="form-group">
+    <div class="input-group">
+      <input type="text" class="form-control input-sm no-border rounded" name="search_str" placeholder="Search...">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-sm bg-white btn-icon rounded"><i class="fa fa-search"></i></button>
+      </span>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+
+  <section class="content">
+    <dialog id='update_dialog' style="border-style: none;margin:0 auto;width:400px">
+        <div class="row">
+          <div class="col-sm-12">
+            <section class="panel panel-default">
+                <header class="panel-heading bg-light no-border">
+                    <div class="clearfix">
+                      <div class="clear">
+
+                        <div class="h3 m-t-xs m-b-xs">
+                          新增或编辑 
+                          <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                          <button class="btn btn-success" onclick="update_table_submit_do()">确认</button>
+                          <button class="btn btn-danger" onclick="update_table_submit_cancel()">取消</button>                          
+                        </div>
+
+                        <h5 class="text-muted">{{tb_name_cn}}</h5>
+                      
+                      </div>
+                    </div>
+                </header>
+
+
+                  <form id="update_submit_form" class="bs-example form-horizontal">
+
+                    {% for d in tb_info_ %}
+                      <div class="form-group">
+                        {% if d.is_nullable=='YES' %}
+                        <label class="col-lg-4 control-label">{{d.comment}}</label>
+                        {% else %}
+                        <label class="col-lg-4 control-label">{{d.comment}}(<a style="color: red">*</a>必填)</label>
+                        {% endif %}
+                        <label class="col-lg-7">
+                          <input id="dialog_{{d.name}}" class="form-control" type="{{d.f_class}}" name="{{d.name}}"  placeholder="{{d.f_class}}" value=""></input>
+                        </label>
+                      </div>
+                    {%  endfor %}
+                  </form>
+
+            </section>
+          </div>
+        </div>
+    </dialog> 
+
+
+    <dialog id='file_upload_dialog' style="border-style: none;width:450px;margin:0 auto;">
+        <div class="row">
+          <div class="col-sm-12">
+            <section class="panel panel-default">
+                <header class="panel-heading bg-light no-border">
+                    <div class="clearfix">
+                      <div class="clear">
+
+                        <div class="h3 m-t-xs m-b-xs">
+                          选择.xlsx,.csv文件
+                          <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                        </div>
+
+                        <small class="text-muted">{{tb_name_cn}}</small>
+                        <br>
+                        <button class="btn btn-danger pull-right" onclick="closeDialogElementById('file_upload_dialog')">取消</button>
+                      </div>
+                    </div>
+                </header>
+
+                <form action="{{url_for('ljy_tb.table_actions', tb_name=tb_name, action_name='upload')}}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type =submit value="上传文件">
+                </form>
+
+            </section>
+          </div>
+        </div>
+    </dialog>
+
+    <dialog id='file_upload_dialog_batch' style="border-style: none;width:450px;margin:0 auto;">
+        <div class="row">
+          <div class="col-sm-12">
+            <section class="panel panel-default">
+                <header class="panel-heading bg-light no-border">
+                    <div class="clearfix">
+                      <div class="clear">
+
+                        <div class="h3 m-t-xs m-b-xs">
+                          算法数据批量导入
+                          <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                          <button class="btn btn-danger" onclick="closeDialogElementById('file_upload_dialog_batch')">取消</button>
+                        </div>
+
+                        {{tb_name_cn}}
+                        <br>
+                        
+
+                      </div>
+                    </div>
+                </header>
+
+                <form action="/ljy_tb/prj_file_upload_dialog_batch" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type =submit value="上传文件">
+                </form>
+
+            </section>
+          </div>
+        </div>
+    </dialog>
+
+      
+    <div class="col-sm-12">
+      <section class="panel panel-white">
+        <header class="panel-heading">
+          <div class="field">
+              
+              {% for sub_tb in sub_tb_list %}
+              {% if sub_tb.en==tb_name %}
+              <a class="btn btn-success" href="{{url_for('ljy_tb.db_tb',tb_name=sub_tb.en,sub_tb_list_str=sub_tb_list_str,prj_name=prj_name,prj_type=prj_type,prj_type_short=prj_type_short)}}">
+                <i class="fa icon-book-open"></i>{{sub_tb.cn}}</a>
+              {% else %}
+              <a class="btn btn-default" href="{{url_for('ljy_tb.db_tb',tb_name=sub_tb.en,sub_tb_list_str=sub_tb_list_str,prj_name=prj_name,prj_type=prj_type,prj_type_short=prj_type_short)}}">
+                <i class="fa icon-book-open"></i>{{sub_tb.cn}}</a>
+              {%endif%}
+              {% endfor %}
+
+              {% if prj_name %}
+              <br><br>
+              <a class="btn  btn-dark" onclick="showDialogElementById('file_upload_dialog_batch')"><i class="fa icon-cloud-upload"></i>批量导入</a>
+              <a class="btn btn-warning" href="/ljy_tb/prj_file_download_dialog_batch?action=download_excel"><i class="fa fa-cloud-download"></i>批量导出</a>
+              <a class="btn  btn-danger" onclick="openurl('/{{prj_type_short}}/prj_data_check?prj_name={{prj_name}}')" target="_blank"><i class="fa icon-check"></i>数据校验</a>
+              <a class="btn  btn-success" onclick="openurl('/{{prj_type_short}}/prj_data_show?prj_name={{prj_name}}')" target="_blank"><i class="fa icon-check"></i>数据呈现</a>                
+              <a class="btn btn-primary" href="/ljy_tb/prj_file_download_dialog_batch?action=get_algorithm_excel"><i class="fa icon-refresh"></i>数据同步</a>
+     <!--          &ensp;<a class="btn  btn-xs btn-dark" href="/{{prj_type_short}}/dashboard?prj_name={{prj_name}}" target="_blank"><i class="fa  icon-bar-chart"></i>项目看板</a> -->
+              <a class="btn btn-info" href="/{{prj_type_short}}/prj_detail?prj_name={{prj_name}}"><i class="fa icon-equalizer"></i>进入项目</a>
+              {% endif %}
+
+              {% if not prj_name %}
+              <a class="btn btn-dark" onclick="showDialogElementById('file_upload_dialog')" ><i class="fa icon-cloud-upload"></i>上传</a>
+              <a class="btn btn-info" href="/ljy_tb/table_actions?tb_name={{tb_name}}&action_name=download"><i class="fa fa-cloud-download"></i>下载</a>
+              <a class="btn btn-danger" onclick="clear_tb_action('{{tb_name}}', '{{prj_name}}')"><i class="fa fa-trash-o"></i>清空</a>
+
+
+              <a class="btn btn-success" onclick="update_tb_name_tr_id('{{tb_name}}', 'row_not_need', 'add')"><i class="fa icon-plus"></i>新增</a>
+              <a class="btn btn-info" href="{{url_for('ljy_tb.db_tb',tb_name=tb_name,show_all='show_all',sub_tb_list_str=sub_tb_list_str,prj_name=prj_name,prj_type=prj_type,prj_type_short=prj_type_short)}}"><i class="fa icon-grid"></i>显示所有...</a>
+
+              {% endif %}
+          </div>
+        </header>
+
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+                {% if tb_name=='auto_sql_bi' %}
+                  <th  style="vertical-align:middle;text-align:center;">编辑SQL_BI</th>
+                {% endif%}             
+                {% for col in col_list_cn %}
+                <th  style="vertical-align:middle;text-align:center;">
+                  <a>{{col}}</a>
+                  <a href="{{url_for('ljy_tb.db_tb',tb_name=tb_name, sort_u=col, search_info=search_info,show_all=show_all,sub_tb_list_str=sub_tb_list_str,prj_name=prj_name,prj_type=prj_type,prj_type_short=prj_type_short)}}"><i class="fa fa-arrow-up"></i></a>
+
+                  <a href="{{url_for('ljy_tb.db_tb',tb_name=tb_name, sort_d=col, search_info=search_info,show_all=show_all,sub_tb_list_str=sub_tb_list_str,prj_name=prj_name,prj_type=prj_type,prj_type_short=prj_type_short)}}"><i class="fa fa-arrow-down"></i></a>
+
+                </th>
+                {% endfor %}
+                <th  style="vertical-align:middle;text-align:center;">编辑</th>
+                <th  style="vertical-align:middle;text-align:center;">删除</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          {% for row_i in rows %} 
+          <tr id='{{row_i.id}}'>
+              {% if tb_name=='auto_sql_bi' %}
+                  <td  style="vertical-align:middle;text-align:center;"><a href="/tb_sql/tb_sql_html?c_name={{row_i['c1_name']}}"><i class="fas fa-edit"></i></a></td>
+              {% endif%}
+              {% for col in col_list %}
+              {% if row_i[col]!='' %}<td  style="vertical-align:middle;text-align:center;">{{row_i[col]}}</td>
+              {%else%}<td  style="vertical-align:middle;text-align:center;">-</td>{%endif%}
+              {% endfor %}
+              <td  style="vertical-align:middle;text-align:center;">
+                  <button class="btn btn-success btn-xs" onclick="update_tb_name_tr_id('{{tb_name}}', '{{row_i.id}}', 'update')"><i class="fas fa-pen"></i></button>
+              </td>
+              <td  style="vertical-align:middle;text-align:center;">
+                  <button class="btn btn-danger btn-xs" onclick="delete_tb_name_tr_id('{{tb_name}}', '{{row_i.id}}')"><i class="fas fa-trash"></i></button>
+              </td>
+          </tr>
+          {%  endfor %} 
+          </tbody>
+              
+        </table>
+        {% if prj_name%}
+              <a class="btn btn-dark" onclick="showDialogElementById('file_upload_dialog')" ><i class="fa icon-cloud-upload"></i>上传</a>
+              <a class="btn btn-info" href="/ljy_tb/table_actions?tb_name={{tb_name}}&action_name=download"><i class="fa fa-cloud-download"></i>下载</a>
+
+              <a class="btn btn-danger" onclick="clear_tb_action('{{tb_name}}', '{{prj_name}}')"><i class="fa fa-trash-o"></i>清空</a>
+              <a class="btn btn-success" onclick="update_tb_name_tr_id('{{tb_name}}', 'row_not_need', 'add')"><i class="fa icon-plus"></i>新增</a>
+              <a class="btn btn-info" href="{{url_for('ljy_tb.db_tb',tb_name=tb_name,show_all='show_all',sub_tb_list_str=sub_tb_list_str,prj_name=prj_name)}}"><i class="fa icon-grid"></i>显示所有...</a>
+        {% endif %}
+      </section>
+
+    </div>  
+    <br><br>
+  </section>
+</div>
+{% endblock %}

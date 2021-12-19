@@ -1,0 +1,383 @@
+{
+  "data": [
+    {
+      "category": "year",
+      "draggable": true,
+      "label": {
+        "normal": {
+          "color": "white",
+          "fontSize": 25.69519334447329,
+          "show": true
+        }
+      },
+      "name": "year",
+      "symbolSize": 25.69519334447329
+    },
+    {
+      "category": "deal_volume_total",
+      "draggable": true,
+      "label": {
+        "normal": {
+          "color": "white",
+          "fontSize": 27.434043068603316,
+          "show": true
+        }
+      },
+      "name": "deal_volume_total",
+      "symbolSize": 27.434043068603316
+    },
+    {
+      "category": "landfill",
+      "draggable": true,
+      "label": {
+        "normal": {
+          "color": "white",
+          "fontSize": 25.712521324426596,
+          "show": true
+        }
+      },
+      "name": "landfill",
+      "symbolSize": 25.712521324426596
+    },
+    {
+      "category": "incineration",
+      "draggable": true,
+      "label": {
+        "normal": {
+          "color": "white",
+          "fontSize": 24.42430770554134,
+          "show": true
+        }
+      },
+      "name": "incineration",
+      "symbolSize": 24.42430770554134
+    },
+    {
+      "category": "compost",
+      "draggable": true,
+      "label": {
+        "normal": {
+          "color": "white",
+          "fontSize": 17.198467216341324,
+          "show": true
+        }
+      },
+      "name": "compost",
+      "symbolSize": 17.198467216341324
+    },
+    {
+      "category": "else_num",
+      "draggable": true,
+      "label": {
+        "normal": {
+          "color": "white",
+          "fontSize": 19.743370892453733,
+          "show": true
+        }
+      },
+      "name": "else_num",
+      "symbolSize": 19.743370892453733
+    }
+  ],
+  "legend_data": [
+    {
+      "icon": "circle",
+      "name": "year"
+    },
+    {
+      "icon": "circle",
+      "name": "deal_volume_total"
+    },
+    {
+      "icon": "circle",
+      "name": "landfill"
+    },
+    {
+      "icon": "circle",
+      "name": "incineration"
+    },
+    {
+      "icon": "circle",
+      "name": "compost"
+    },
+    {
+      "icon": "circle",
+      "name": "else_num"
+    }
+  ],
+  "link": [
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 40.0
+        }
+      },
+      "source": "year",
+      "target": "year"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 13.609007840423665
+        }
+      },
+      "source": "year",
+      "target": "deal_volume_total"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 9.215672529874153
+        }
+      },
+      "source": "year",
+      "target": "landfill"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 14.501449418068244
+        }
+      },
+      "source": "year",
+      "target": "incineration"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": -0.7544912482554469
+        }
+      },
+      "source": "year",
+      "target": "compost"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 0.9969364783490813
+        }
+      },
+      "source": "year",
+      "target": "else_num"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 40.0
+        }
+      },
+      "source": "deal_volume_total",
+      "target": "deal_volume_total"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 35.11000447130611
+        }
+      },
+      "source": "deal_volume_total",
+      "target": "landfill"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 20.767909899401968
+        }
+      },
+      "source": "deal_volume_total",
+      "target": "incineration"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": -0.0008649937252419237
+        }
+      },
+      "source": "deal_volume_total",
+      "target": "compost"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 2.1192853960712017
+        }
+      },
+      "source": "deal_volume_total",
+      "target": "else_num"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 40.0
+        }
+      },
+      "source": "landfill",
+      "target": "landfill"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 9.154631634829489
+        }
+      },
+      "source": "landfill",
+      "target": "incineration"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": -0.0006176208814113165
+        }
+      },
+      "source": "landfill",
+      "target": "compost"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 2.1655316567576515
+        }
+      },
+      "source": "landfill",
+      "target": "else_num"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 40.0
+        }
+      },
+      "source": "incineration",
+      "target": "incineration"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": -0.039954299223514615
+        }
+      },
+      "source": "incineration",
+      "target": "compost"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 0.09730042376024048
+        }
+      },
+      "source": "incineration",
+      "target": "else_num"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 40.0
+        }
+      },
+      "source": "compost",
+      "target": "compost"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": -0.34624329558449934
+        }
+      },
+      "source": "compost",
+      "target": "else_num"
+    },
+    {
+      "lineStyle": {
+        "normal": {
+          "color": "source",
+          "curveness": 0.2,
+          "show": true,
+          "type": "solid",
+          "width": 40.0
+        }
+      },
+      "source": "else_num",
+      "target": "else_num"
+    }
+  ]
+}

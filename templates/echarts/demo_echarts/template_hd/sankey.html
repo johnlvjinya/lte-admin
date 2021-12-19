@@ -1,0 +1,212 @@
+{% extends 'base/base03_nav.html' %}
+
+{% block content%}
+
+<div class="content-wrapper">
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-header p-2">
+                sankey图
+              </div><!-- /.card-header -->
+
+              <div class="card-body">
+                    <div id="container" style="height: 800px"></div>
+              </div><!-- /.card-body -->
+            </div>
+
+        </div>
+    </div>
+
+
+</section>
+</div>
+{% endblock %}
+
+
+{% block script_foot %}
+
+<script  type="text/javascript">
+function get_my_data_95() {
+    var datas= null;//定义一个全局变量
+    $.ajax({
+        type:"GET",
+        url:"/demo_echarts/sankey",
+        async:false,
+        data:"",
+        success:function(res){
+            // 获取数据并保存至变量
+            // console.log(res)
+            datas = res;
+            }
+        });
+    return datas
+}
+
+var mydata_95 = get_my_data_95();
+
+var nodes = mydata_95.nodes;
+var links = mydata_95.links;
+var dom = document.getElementById('container');
+var chart_95 = echarts.init(dom);
+var app = {};
+
+
+var option = {
+    title: {
+        text: mydata_95.title,
+        subtext: mydata_95.sub_title
+    },
+    tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove',
+    },
+    grid: {
+        top:'30%',
+        left: '1%',
+        right: '1%',
+        bottom: '1%',
+        containLabel: true
+    },
+
+
+    series: {
+        type: 'sankey',
+        layout: 'none',
+        top: 10,
+        left: 0,
+        right: 100,
+        nodeGap: 14,
+        // layoutIterations: 0, // 自动优化列表，尽量减少线的交叉，为0就是按照数据排列
+        data: nodes, // 节点
+        links: links, // 节点之间的连线
+        draggable: true,
+        focusNodeAdjacency: 'allEdges', // 鼠标划上时高亮的节点和连线，allEdges表示鼠标划到节点上点亮节点上的连线及连线对应的节点
+        tooltip: {
+          formatter: function(params) {
+            if (params.data.source) {
+              return `${params.data.source}：${params.data.value}`;
+            } else {
+              return `${params.name}：${params.value}`;
+            }
+          }
+        },
+        levels: [
+            {
+                depth: 0,
+                itemStyle: {
+                    color: '#F27E7E',
+                },
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 1,
+
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 2,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 3,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 4,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 5,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            }, 
+            {
+                depth: 6,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+        ],
+        label: {
+            fontSize: 14,
+            color: '#666',
+        },
+        itemStyle: {
+            normal: {
+                borderWidth: 0,
+            },
+        },
+    },
+    backgroundColor:'white', //设置无背景色    
+    toolbox:{
+            show: true,
+            feature: {
+              myFull: {
+                show: true,
+                title: '全屏查看',
+                icon: "path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891",
+
+                onclick: (e) => {
+                  const element = document.getElementById("container");
+                  if (element.requestFullScreen) { // HTML W3C 提议
+                        element.requestFullScreen();
+                      } else if (element.msRequestFullscreen) { // IE11
+                        element.msRequestFullScreen();
+                      } else if (element.webkitRequestFullScreen) { // Webkit (works in Safari5.1 and Chrome 15)
+                        element.webkitRequestFullScreen();
+                      } else if (element.mozRequestFullScreen) { // Firefox (works in nightly)
+                        element.mozRequestFullScreen();
+                      }
+                  // 退出全屏
+                  if (element.requestFullScreen) {
+                        document.exitFullscreen();
+                      } else if (element.msRequestFullScreen) {
+                        document.msExitFullscreen();
+                      } else if (element.webkitRequestFullScreen) {
+                        document.webkitCancelFullScreen();
+                      } else if (element.mozRequestFullScreen) {
+                        document.mozCancelFullScreen();
+                      }
+
+
+                },
+              },
+            },
+          },
+
+    
+};
+
+
+if (option && typeof option === "object") {
+    chart_95.setOption(option, true);
+    window.addEventListener("resize",function(){
+        chart_95.resize();
+    });
+}
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminDW</title>
+
+<!--   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
+  <link rel="stylesheet" href="/static/lte/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/jqvmap/jqvmap.min.css">
+  <link rel="stylesheet" href="/static/lte/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="/static/lte/plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/fullcalendar/main.css">
+  
+  <link rel="stylesheet" href="/static/lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+  <link rel="stylesheet" href="/static/lte/plugins/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/toastr/toastr.min.css">
+
+  <link rel="stylesheet" href="/static/lte/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">
+  <link rel="stylesheet" href="/static/lte/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
+
+
+  {% block css %}
+  {% endblock %}
+  <script src="/static/lte/plugins/jquery/jquery.min.js"></script>
+  <script src="/static/lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/base/echarts.min.js"></script>
+  <script type="text/javascript" src="/static/base/jquery.cookie.min.js"></script>
+  <script type="text/javascript" src="/static/lvjinya/js/main.js"></script>
+  <script type="text/javascript" src="/static/lvjinya/js/table.js"></script> 
+  {% block script %}
+  {% endblock %}
+</head>
+
+
+
+<body id="boddy" class="old-transition sidebar-mini layout-fixed">  <!-- layout-fixed sidebar-collapse -->
+
+<script>
+    // 读取coockies中的属性
+    var cookie_sidebar_state = $.cookie('sidebar_state');   //dumplings
+    console.log('test1_cookie........', cookie_sidebar_state);
+    document.getElementById("boddy").setAttribute("class",cookie_sidebar_state);
+</script>
+
+
+<div class="wrapper">
+  <div class="preloader flex-column justify-content-center align-items-center">
+    {% block logo_figure %}
+    <img class="animation__shake" src="/static/lte/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    {% endblock %}
+  </div>
+
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    {% block left_nav_links%}
+    {% endblock %}
+    
+    {% block top_nav %}
+    {% endblock %}
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert"><span class="bg-danger">{{ message }}</span></div>
+    {% endfor %}
+
+    {% block right_nav_links%}
+    {% endblock %}
+
+  </nav>
+
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    {% block brand_logo %}
+    {% endblock %}
+
+    <div class="sidebar">
+      
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% block sidebar_menu %}
+      {% endblock %}
+    </div>
+  </aside>
+
+  {% block content %}
+  {% endblock %}
+
+  {% block foot %}
+  {% endblock %}
+
+  <aside class="control-sidebar control-sidebar-dark">
+  </aside>
+  
+</div>
+
+{% block script_foot %}
+{% endblock %}
+
+
+
+
+
+<script>$.widget.bridge('uibutton', $.ui.button)</script>
+<script src="/static/lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/lte/plugins/chart.js/Chart.min.js"></script>
+<script src="/static/lte/plugins/sparklines/sparkline.js"></script>
+<script src="/static/lte/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/static/lte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="/static/lte/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="/static/lte/plugins/moment/moment.min.js"></script>
+<script src="/static/lte/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/static/lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/static/lte/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/static/lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/static/lte/dist/js/adminlte.js"></script>
+
+
+{% block script_foot2 %}
+{% endblock %}
+
+
+
+
+</body>
+</html>

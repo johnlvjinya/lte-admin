@@ -1,0 +1,176 @@
+
+{% extends 'base/openurl.html' %}
+
+{% block page_wrapper %}
+<div class="panel-body"><div id="container_95" style="height: 700px"></div></div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block script_foot %}
+
+<script  type="text/javascript">
+function get_my_data_95() {
+    var datas= null;//定义一个全局变量
+    $.ajax({
+        type:"GET",
+        url:"/t100_echarts/work_order_sankey",
+        async:false,
+        data:"",
+        success:function(res){
+            // 获取数据并保存至变量
+            // console.log(res)
+            datas = res;
+            }
+        });
+    return datas
+}
+
+var mydata_95 = get_my_data_95();
+
+var nodes = mydata_95.nodes;
+var links = mydata_95.links;
+var dom = document.getElementById('container_95');
+var chart_95 = echarts.init(dom);
+var app = {};
+
+
+
+
+var option = {
+    title: {
+        text: '状态码-->资料录入者-->成本中心',
+        subtext: '数据表示工单的产品数量'
+    },
+    tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove',
+    },
+    grid: {
+        top:'30%',
+        left: '1%',
+        right: '1%',
+        bottom: '1%',
+        containLabel: true
+    },
+
+
+    series: {
+        type: 'sankey',
+        layout: 'none',
+        top: 10,
+        left: 0,
+        right: 100,
+        nodeGap: 14,
+        // layoutIterations: 0, // 自动优化列表，尽量减少线的交叉，为0就是按照数据排列
+        data: nodes, // 节点
+        links: links, // 节点之间的连线
+        draggable: true,
+        focusNodeAdjacency: 'allEdges', // 鼠标划上时高亮的节点和连线，allEdges表示鼠标划到节点上点亮节点上的连线及连线对应的节点
+        tooltip: {
+          formatter: function(params) {
+            if (params.data.source) {
+              return `${params.data.source}：${params.data.value}`;
+            } else {
+              return `${params.name}：${params.value}`;
+            }
+          }
+        },
+        levels: [
+            {
+                depth: 0,
+                itemStyle: {
+                    color: '#F27E7E',
+                },
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 1,
+
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 2,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 3,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 4,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 5,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            }, 
+            {
+                depth: 6,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+        ],
+        label: {
+            fontSize: 14,
+            color: '#666',
+        },
+        itemStyle: {
+            normal: {
+                borderWidth: 0,
+            },
+        },
+    },
+};
+
+
+if (option && typeof option === "object") {
+    chart_95.setOption(option, true);
+    window.addEventListener("resize",function(){
+        chart_95.resize();
+    });
+
+}
+
+// 点击查询对应的产品料号数量
+chart_95.on('click', function (param) {
+       console.log('ttttttttttttttttt1', param);//打印查看获取到的数据
+       console.log('ttttttttttttttttt1', param.name);//打印查看获取到的数据
+       // 判断是否是工号
+       var o_url = "/t100_echarts/cureent_json_html?file_path=work_orders/staff_产品料号.html&staff_id="+param.name
+       if(mydata_95.worker_list.includes(param.name)){
+            openurl(o_url);//自己的链接并拼接id跳转
+       }   
+});
+
+</script>
+
+{% endblock %}

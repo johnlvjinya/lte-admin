@@ -1,0 +1,49 @@
+{% extends 'base/base03_nav.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+
+
+<section class="content">
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+          <div class="card-header p-2">人员管理工单数量对比</div>
+          <div class="card-body">
+                <iframe src="/t100_echarts/cureent_json_html?file_path=work_orders/staff_work_order_compare.html" frameborder="0" width="100%" height="1000px"></iframe>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="card">
+          <div class="card-header p-2">工单状态对比</div>
+          <div class="card-body">
+                <iframe src="/t100_echarts/cureent_json_html?file_path=work_orders/work_order_state_compare.html" frameborder="0" width="100%" height="200px"></iframe>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header p-2">工单状态为Y和N的工单概况sankey图</div>
+          <div class="card-body">
+                <iframe src="/t100_echarts/cureent_json_html?file_path=work_orders/work_order_sankey.html" frameborder="0" width="100%" height="720px"></iframe>
+          </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+</section>
+</div>
+
+
+{% endblock %}
+

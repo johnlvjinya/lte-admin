@@ -1,0 +1,366 @@
+{% extends 'base/base03_nav.html' %}
+
+
+{% block content %}
+<div class="content-wrapper">
+
+<section class="content">
+
+
+    <a id="file_name" value="{{mydict.c_prj}}"></a>
+
+    <div class="row">
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">项目总数</span>
+            <span class="info-box-number">
+              {{mydict.prj_num}}
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">运行成功</span>
+            <span class="info-box-number">{{mydict.s_total_num}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+      </div>
+
+      <div class="clearfix hidden-md-up"></div>
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">最新项目</span>
+            <span class="info-box-number">{{mydict.c_prj}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+      </div>
+
+
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">订单总数</span>
+            <span class="info-box-number">{{mydict.c_prj_order_num}}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+      </div>
+      
+    </div>
+
+
+
+    <div class="col-sm-12">
+        <a href="https://flask-file-manage-1257726623.cos.ap-shanghai.myqcloud.com/lvjinya/p_work_dw_APS%E4%BA%A7%E5%93%81%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.pdf" target="_blank"></a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+              <div class="card-header p-2">
+                订单sankey图
+              </div><!-- /.card-header -->
+
+              <div class="card-body">
+                    <div id="container_95" style="height: 700px"></div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+
+              <div class="card-header p-2">
+                订单完成度
+              </div><!-- /.card-header -->
+
+              <div class="card-body">
+                    <div id="container_73" style="height: 700px"></div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+<!--     <div class="col-sm-12"  style="background: url(/static/scheduling/index/images/panel.png);background-size: 100% 100%;">
+          <div id="container_95" style="height: 700px"></div>
+    </div> -->
+
+<!--     <div class="col-sm-12"  style="background: url(/static/scheduling/index/images/panel.png);background-size: 100% 100%;">
+          <div id="container_73" style="height: 700px"></div>
+    </div>
+ -->
+
+
+</section>
+</div>
+
+
+{% endblock %}
+
+
+{% block script_foot %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.0.1/dist/echarts.min.js"></script>
+<script type="text/javascript">
+
+
+
+
+
+function get_my_data_95() {
+    var datas= null;//定义一个全局变量
+    $.ajax({
+        type:"GET",
+        url:"/scheduling_projects/order_sankey",
+        async:false,
+        data:"",
+        success:function(res){
+            // 获取数据并保存至变量
+            // console.log(res)
+            datas = res;
+            }
+        });
+    return datas
+}
+
+var mydata_95 = get_my_data_95();
+
+var nodes = mydata_95.nodes;
+var links = mydata_95.links;
+var dom = document.getElementById('container_95');
+var chart_95 = echarts.init(dom);
+var app = {};
+
+
+
+
+var option = {
+    tooltip: {
+        trigger: 'item',
+        triggerOn: 'mousemove',
+    },
+    title: {
+        text: '订单概览',
+        subtext: ''
+    },
+
+    series: {
+        type: 'sankey',
+        layout: 'none',
+        top: 10,
+        left: 0,
+        right: 100,
+        nodeGap: 14,
+        // layoutIterations: 0, // 自动优化列表，尽量减少线的交叉，为0就是按照数据排列
+        data: nodes, // 节点
+        links: links, // 节点之间的连线
+        draggable: true,
+        focusNodeAdjacency: 'allEdges', // 鼠标划上时高亮的节点和连线，allEdges表示鼠标划到节点上点亮节点上的连线及连线对应的节点
+        tooltip: {
+          formatter: function(params) {
+            if (params.data.source) {
+              return `${params.data.source}：${params.data.value}`;
+            } else {
+              return `${params.name}：${params.value}`;
+            }
+          }
+        },
+        levels: [
+            {
+                depth: 0,
+                itemStyle: {
+                    color: '#F27E7E',
+                },
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 1,
+
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 2,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 3,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 4,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+            {
+                depth: 5,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            }, 
+            {
+                depth: 6,
+                lineStyle: {
+                    color: 'source',
+                    opacity: 0.4,
+                },
+            },
+        ],
+        label: {
+            fontSize: 14,
+            color: '#666',
+        },
+        itemStyle: {
+            normal: {
+                borderWidth: 0,
+            },
+        },
+    },
+};
+
+
+if (option && typeof option === "object") {
+    chart_95.setOption(option, true);
+    window.addEventListener("resize",function(){
+        chart_95.resize();
+    });
+
+}
+
+
+function get_my_data_73() {
+    var datas= null;//定义一个全局变量
+    $.ajax({
+        type:"GET",
+        url:"/scheduling_projects/order_finish_p",
+        async:false,
+        data:"",
+        success:function(res){
+            // 获取数据并保存至变量
+            // console.log(res)
+            datas = res;
+            }
+        });
+    return datas
+}
+
+var mydata_73 = get_my_data_73();
+
+var myColor = mydata_73.c_list;
+var dom = document.getElementById('container_73');
+var chart_73 = echarts.init(dom);
+var app = {};
+option = {
+    title: {
+        text: '订单完成度',
+        subtext: ''
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['订单完成度']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    // visualMap: {
+    //     min: 0,
+    //     max: 100,
+    //     text: ['0', '100%'],
+    //     // realtime: false,
+    //     // calculable: true,
+    //     inRange: {
+    //         color: ['pink','yellow', 'lightskyblue', 'lightgreen', 'lime']
+    //     }
+
+    // },
+
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01],
+        max:100
+    },
+    yAxis: {
+        type: 'category',
+        data: mydata_73.k_list
+    },
+
+    series: [
+        {
+            name: mydata_73.k_list,
+            type: 'bar',
+            showBackground: true,
+            data: mydata_73.v_list,
+            barWidth: 12,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        var num = myColor.length;
+                        return myColor[params.dataIndex % num]
+                    },
+                }
+            },            
+
+
+        },
+
+
+    ]
+};
+
+if (option && typeof option === "object") {
+    chart_73.setOption(option, true);
+    window.addEventListener("resize",function(){
+        chart_73.resize();
+    });
+
+}
+
+
+</script>
+{%endblock%}

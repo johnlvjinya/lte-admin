@@ -1,0 +1,77 @@
+{% extends 'base/base03_nav.html' %}
+
+
+{% block content %}
+<div class="content-wrapper">
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title bg-success">校验成功项目</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>校验项目</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for c in c_dict_list%}
+              {% if c.c_type!='danger' %}
+              <tr>
+                <td>{{c.c_name}}</td>
+                <td><span class="badge bg-success">{{c.c_result}}</span></td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title bg-danger">校验失败项目</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>校验项目</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for c in c_dict_list%}
+              {% if c.c_type=='danger' %}
+              <tr>
+                <td>{{c.c_name}}</td>
+                <td><span class="badge bg-danger">{{c.c_result}}</span></td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base/base03_nav.html' %}
+
+
+{% block content %}
+<div class="content-wrapper">
+<section class="content">
+
+<div class="row">
+
+  <div class="col-md-3">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">根据工号查询工单</h3>
+      </div>
+
+      <form action="{{url_for('t100_echarts.t100_sql_form', gong_hao=gong_hao, workno_select1=workno_select1,tiao_jian_2=tiao_jian_2)}}" method="POST">
+        <div class="card-body">
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">输入工号(王柱：2017060097)</label>
+            <input type="text" class="form-control" name="gong_hao" placeholder="工号如：2017060097">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">单号字符条件(泡燥车间：GDE||GD7)</label>
+            <input type="text" class="form-control" name="workno_select1" placeholder="如：GDE||GD7">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">选择条件2(预留，暂时不用)</label>
+            <input type="text" class="form-control" name="tiao_jian_2" placeholder="选择条件2">
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">查询</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+</div>
+
+</section>
+</div>
+{% endblock %}
+
+
+{% block script_foot %}
+{%endblock%}

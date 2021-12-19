@@ -1,0 +1,129 @@
+{% extends 'base/base03_nav.html' %}
+
+
+{% block content %}
+<div class="content-wrapper">
+<section class="content">
+
+<div class="row">
+
+  <div class="col-md-12">
+
+
+    <div class="card">
+      <!-- <div class="card-header p-2">人员管理工单数量对比</div> -->
+
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+
+          <!-- <li class="nav-item"><a class="nav-link  active" href="#t0" data-toggle="tab">工号查询工单(模板)</a></li> -->
+
+          <li class="nav-item"><a class="nav-link active" href="#t1" data-toggle="tab">ERP库存物料</a></li>
+          <li class="nav-item"><a class="nav-link" href="#t2" data-toggle="tab">工艺路线ALL</a></li>
+          <li class="nav-item"><a class="nav-link" href="#t3" data-toggle="tab">在途物料</a></li>
+          <li class="nav-item"><a class="nav-link" href="#t99" data-toggle="tab"><strong>批量导出模板</strong></a></li>
+
+          <li class="nav-item"><a class="nav-link" href="#t1000" data-toggle="tab">没有工艺的料件</a></li>
+        </ul>
+      </div><!-- /.card-header -->
+
+      <div class="card-body">
+        <div class="tab-content">
+
+          <div class="tab-pane" id="t0">
+              <form action="{{url_for('sql_note_list.worker_work_order', gong_hao=gong_hao, workno_select1=workno_select1,tiao_jian_2=tiao_jian_2)}}" method="POST">
+                <div class="card-body">
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">输入工号(王柱：2017060097)</label>
+                    <input type="text" class="form-control" name="gong_hao" placeholder="工号如：2017060097" value="2017060097">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">单号字符条件(泡燥车间：GDE||GD7)</label>
+                    <input type="text" class="form-control" name="workno_select1" placeholder="如：GDE||GD7" value="GDE||GD7"> 
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">选择条件2(预留，暂时不用)</label>
+                    <input type="text" class="form-control" name="tiao_jian_2" placeholder="选择条件2">
+                  </div>
+
+                </div>
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+          <div class="tab-pane active" id="t1">
+              <form action="{{url_for('sql_note_list.erp_stock')}}" method="POST">
+  
+                大约等待10s...
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+          <div class="tab-pane" id="t2">
+              <form action="{{url_for('sql_note_list.work_process')}}" method="POST">
+                
+                大约等待10s...<hr>
+                <b>注意工艺路线来自ERP数据库</b><br> 
+                con = cx.connect('wms_viewer/Wv#@Ss5qT@10.1.254.145:10058/wmsorcl')
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+          <div class="tab-pane" id="t3">
+              <form action="{{url_for('sql_note_list.material_on_the_way')}}" method="POST">
+                
+                大约等待2s...<hr>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+          <div class="tab-pane" id="t99">
+              <form action="{{url_for('sql_note_list.get_all_template_excel')}}" method="POST">
+                
+                大约等待2s...<hr>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+          <div class="tab-pane" id="t1000">
+
+
+              <form action="{{url_for('sql_note_list.no_process_material')}}" method="POST">
+                
+                大约等待10s...<hr>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询无工艺路线料件</button>
+                </div>
+              </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+</section>
+</div>
+{% endblock %}
+
+
+{% block script_foot %}
+{%endblock%}

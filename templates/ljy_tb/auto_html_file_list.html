@@ -1,0 +1,53 @@
+
+
+
+{% extends 'base/base02.html' %}
+
+
+{% block vbox%}
+  <section id="content">
+    <section class="vbox">
+      <section class="scrollable padder">
+        <div class="m-b-md">
+
+
+        <div class="col-sm-12">
+          <section class="panel panel-default">
+
+            <header class="panel-heading">
+              <span class="label bg-info pull-left xs">auto-html列表</span>
+
+            </header>              
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>文件名</th>
+                  <th>地址</th>
+                  <th>查看</th>
+                  <th>备注</th>                     
+                </tr>
+              </thead>
+
+              <tbody>
+                  {% for row in rows %}
+                  <tr>
+                      <td>{{row.name}}</td>
+                      <td> {{row.url}} </td>
+                      <td><a href="{{row.url}}"><span class="label bg-info pull-left xs">查看</span></a></td>
+                      <td>-</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+              
+            </table>
+            
+          </section>
+        </div>
+
+
+
+
+      </section>
+    </section>
+  </section>
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'base/base02_mix.html' %}
+
+
+{% block sidebar_menu %}
+<nav class="mt-2">
+  
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+    {% if ad.user_role=='cy' or ad.user_role=='admin' %}
+
+    <li class="nav-item {{ad.menuT100大数据分析}}"> <!-- menu=admin,cy -->
+      <a href="#" class="nav-link {{ad.T100大数据分析}}"><i class="nav-icon fas fa-bookmark text-warning"></i><p>T100大数据分析<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/t100_echarts/orders" class="nav-link {{ad.订单数据365}}"><i class="far fa-circle nav-icon text-warning"></i><p>订单数据365</p></a></li>        
+        <li class="nav-item"><a href="/t100_echarts/work_orders" class="nav-link {{ad.工单数据}}"><i class="far fa-circle nav-icon text-warning"></i><p>工单数据</p></a></li>
+        <li class="nav-item"><a href="/sql_note_list/s_html" class="nav-link {{ad.T100数据查询}}"><i class="far fa-circle nav-icon text-warning"></i><p>数据查询</p></a></li>        
+      </ul>
+    </li>   
+
+    <li class="nav-item {{ad.menu手工导入排产}}"> <!-- menu=admin,cy -->
+      <a href="#" class="nav-link {{ad.手工导入排产}}"><i class="nav-icon fas fa-thumbs-up text-info"></i><p>手工导入排产<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/ljy_tb/db_tb?tb_name=scheduling_projects____prj_main" class="nav-link {{ad.订单排产项目}}"><i class="far fa-circle nav-icon  text-info"></i><p>订单排产项目</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=prj/scheduling_projects/gantt_demo.html" class="nav-link {{ad.甘特图拖动}}"><i class="far fa-circle nav-icon text-info"></i><p>甘特图拖动</p></a></li>
+      </ul>
+    </li>   
+
+    <li class="nav-item {{ad.menu泡罩专属排产}}"> <!-- menu=admin,cy -->
+      <a href="#" class="nav-link {{ad.泡罩专属排产}}"><i class="nav-icon fas fa-cat text-success"></i><p>泡罩专属排产<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/paozhao_schedule/work_process" class="nav-link {{ad.泡罩数据和算法}}"><i class="far fa-circle nav-icon  text-success"></i><p>泡罩数据和算法</p></a></li>
+      </ul>
+    </li>   
+
+    <li class="nav-item {{ad.menu车间排产}}"> <!-- menu=admin,cy -->
+      <a href="#" class="nav-link {{ad.车间排产}}"><i class="nav-icon fas fa-cat text-success"></i><p>车间排产<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/ljy_tb/db_tb?tb_name=workshop_cy____prj_main" class="nav-link {{ad.新增车间}}"><i class="far fa-circle nav-icon  text-success"></i><p>新增车间</p></a></li>
+        <li class="nav-item"><a href="/workshop_cy/prj_pannel_list" class="nav-link {{ad.车间项目列表}}"><i class="far fa-circle nav-icon  text-success"></i><p>车间项目列表</p></a></li>        
+      </ul>
+    </li>   
+
+    {% endif %}
+    {% if ad.user_role=='sjtu' or  ad.user_role=='admin' %}
+    <li class="nav-item {{ad.menuMSW_TPF}}"> <!-- menu=admin,sjtu -->
+      <a href="#" class="nav-link {{ad.MSW_TPF}}"><i class="nav-icon fas fa-industry text-warning"></i><p>MSW_TPF<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/ljy_tb/db_tb?tb_name=sjtu_carbon_emission____prj_main" class="nav-link {{ad.MSW碳排放项目}}"><i class="far fa-circle nav-icon  text-primary"></i><p>MSW碳排放项目</p></a></li>
+      </ul>
+    </li>   
+    {% endif %}
+
+
+
+    {% if ad.user_role=='admin' %}
+
+    <li class="nav-item {{ad.menu数据面板}}"> <!-- menu=admin,cy -->
+      <a href="#" class="nav-link {{ad.数据面板}}"><i class="nav-icon fas fa-tachometer-alt text-info"></i><p>数据面板<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/index.html" class="nav-link {{ad.看板1}}"><i class="far fa-circle nav-icon"></i><p>看板1</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/index2.html" class="nav-link {{ad.看板2}}"><i class="far fa-circle nav-icon"></i><p>看板2</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/index3.html" class="nav-link {{ad.看板3}}"><i class="far fa-circle nav-icon"></i><p>看板3</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=gantt_dist/index.html" class="nav-link {{ad.甘特图}}"><i class="far fa-circle nav-icon"></i><p>甘特图</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu自动化开发}}">
+      <a href="#" class="nav-link {{ad.自动化开发}}"><i class="nav-icon fas fa-bus text-warning"></i><p>自动化开发<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/ljy_tb/db_tb_list" class="nav-link {{ad.表格列表}}"><i class="far fa-circle nav-icon"></i><p>表格列表</p></a></li>
+        <li class="nav-item"><a href="/ljy_tb/db_tb?tb_name=auto_sql_bi" class="nav-link {{ad.SQL_BI列表}}"><i class="far fa-circle nav-icon"></i><p>SQL_BI列表</p></a></li>
+        <!-- <li class="nav-item"><a href="/tb_sql/tb_sql_html" class="nav-link {{ad.SQL表格}}"><i class="far fa-circle nav-icon"></i><p>SQL表格</p></a></li>         -->
+
+        
+      </ul>
+    </li>    
+
+    <li class="nav-item {{ad.menuEcharts示例}}">
+      <a href="#" class="nav-link {{ad.Echarts示例}}"><i class="nav-icon fas fa-tree  text-success"></i><p>Echarts示例<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/demo_echarts/demo_html?file_name=bar" class="nav-link {{ad.bar}}"><i class="far fa-circle nav-icon"></i><p>bar</p></a></li>
+        <li class="nav-item"><a href="/demo_echarts/demo_html?file_name=bar_group" class="nav-link {{ad.bar_group}}"><i class="far fa-circle nav-icon"></i><p>bar_group</p></a></li>
+        <li class="nav-item"><a href="/demo_echarts/demo_html?file_name=pie" class="nav-link {{ad.pie}}"><i class="far fa-circle nav-icon"></i><p>pie</p></a></li>
+        <li class="nav-item"><a href="/demo_echarts/demo_html?file_name=sankey" class="nav-link {{ad.sankey}}"><i class="far fa-circle nav-icon"></i><p>sankey</p></a></li>
+        <li class="nav-item"><a href="/demo_echarts/demo_html?file_name=map_heat_shanghai" class="nav-link {{ad.map_heat_shanghai}}"><i class="far fa-circle nav-icon"></i><p>map_heat_shanghai</p></a></li>
+        <li class="nav-item"><a href="/demo_echarts/demo_html?file_name=map_heat_china" class="nav-link {{ad.map_heat_china}}"><i class="far fa-circle nav-icon"></i><p>map_heat_china</p></a></li>        
+      </ul>
+    </li>    
+
+    <li class="nav-item {{ad.menu合并菜单1}}">
+      <a href="#" class="nav-link {{ad.合并菜单1}}"><i class="nav-icon fas fa-copy"></i><p>合并菜单1<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/widgets.html" class="nav-link {{ad.widgets}}"><i class="nav-icon fas fa-th  text-info"></i><p>widgets</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/iframe.html" class="nav-link {{ad.TabbedIFrame插件}}"><i class="nav-icon fas fa-ellipsis-h text-danger"></i><p>TabbedIFrame插件</p></a></li>
+        <li class="nav-item"><a href="https://adminlte.io/docs/3.1/" class="nav-link {{ad.文档}}" ><i class="nav-icon fas fa-file  text-warning"></i><p>文档</p></a></li>   
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/calendar.html" class="nav-link {{ad.日历}}"><i class="nav-icon far fa-calendar-alt"></i><p>日历<span class="badge badge-info right">2</span></p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/gallery.html" class="nav-link {{ad.图集}}"><i class="nav-icon far fa-image"></i><p>图集</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/kanban.html" class="nav-link {{ad.看板}}"><i class="nav-icon fas fa-columns"></i><p>看板</p></a></li>
+      </ul>
+    </li>    
+
+    <li class="nav-item {{ad.menu布局}}">
+      <a href="#" class="nav-link {{ad.布局}}"><i class="nav-icon fas fa-copy"></i><p>布局<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item "><a href="/file_path?file_path=lte/pages/layout/top-nav.html" class="nav-link {{ad.top菜单}}"><i class="far fa-circle nav-icon"></i><p>top菜单</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/layout/boxed.html" class="nav-link {{ad.盒子}}"><i class="far fa-circle nav-icon"></i><p>盒子</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/layout/collapsed-sidebar.html" class="nav-link {{ad.菜单收缩}}"><i class="far fa-circle nav-icon"></i><p>菜单收缩</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu图表}}">
+      <a href="#" class="nav-link {{ad.图表}}"><i class="nav-icon fas fa-chart-pie"></i><p>图表<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/charts/chartjs.html" class="nav-link {{ad.ChartJS}}"><i class="far fa-circle nav-icon"></i><p>ChartJS</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/charts/flot.html" class="nav-link {{ad.Flot}}"><i class="far fa-circle nav-icon"></i><p>Flot</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/charts/inline.html" class="nav-link {{ad.Inline}}"><i class="far fa-circle nav-icon"></i><p>Inline</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/charts/uplot.html" class="nav-link {{ad.uPlot}}"><i class="far fa-circle nav-icon"></i><p>uPlot</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menuUI元素}}">
+      <a href="#" class="nav-link {{ad.UI元素}}"><i class="nav-icon fas fa-tree"></i><p>UI元素<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/general.html" class="nav-link {{ad.General}}"><i class="far fa-circle nav-icon"></i><p>General</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/icons.html" class="nav-link {{ad.图标}}"><i class="far fa-circle nav-icon"></i><p>图标</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/buttons.html" class="nav-link {{ad.按钮}}"><i class="far fa-circle nav-icon"></i><p>按钮</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/sliders.html" class="nav-link {{ad.滑块}}"><i class="far fa-circle nav-icon"></i><p>滑块</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/modals.html" class="nav-link {{ad.弹窗}}"><i class="far fa-circle nav-icon"></i><p>弹窗</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/navbar.html" class="nav-link {{ad.tab}}"><i class="far fa-circle nav-icon"></i><p>tab</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/timeline.html" class="nav-link {{ad.时间线}}"><i class="far fa-circle nav-icon"></i><p>时间线</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/UI/ribbons.html" class="nav-link {{ad.Ribbons}}"><i class="far fa-circle nav-icon"></i><p>Ribbons</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu表单}}">
+      <a href="#" class="nav-link {{ad.表单}}"><i class="nav-icon fas fa-edit"></i><p>表单<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/forms/general.html" class="nav-link {{ad.一般}}"><i class="far fa-circle nav-icon"></i><p>一般</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/forms/advanced.html" class="nav-link {{ad.高级元素}}"><i class="far fa-circle nav-icon"></i><p>高级元素</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/forms/editors.html" class="nav-link {{ad.Editors}}"><i class="far fa-circle nav-icon"></i><p>Editors</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/forms/validation.html" class="nav-link {{ad.Validation}}"><i class="far fa-circle nav-icon"></i><p>Validation</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu表格}}">
+      <a href="#" class="nav-link {{ad.表格}}"><i class="nav-icon fas fa-table"></i><p>表格<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/tables/simple.html" class="nav-link {{ad.简单表格}}"><i class="far fa-circle nav-icon"></i><p>简单表格</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/tables/data.html" class="nav-link {{ad.DataTables}}"><i class="far fa-circle nav-icon"></i><p>DataTables</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/tables/jsgrid.html" class="nav-link {{ad.jsGrid}}"><i class="far fa-circle nav-icon"></i><p>jsGrid</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu邮箱}}">
+      <a href="#" class="nav-link {{ad.邮箱}}"><i class="nav-icon far fa-envelope"></i><p>邮箱<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/mailbox/mailbox.html" class="nav-link {{ad.Inbox}}"><i class="far fa-circle nav-icon"></i><p>Inbox</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/mailbox/compose.html" class="nav-link {{ad.Compose}}"><i class="far fa-circle nav-icon"></i><p>Compose</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/mailbox/read-mail.html" class="nav-link {{ad.阅读}}"><i class="far fa-circle nav-icon"></i><p>阅读</p></a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu页面}}">
+      <a href="#" class="nav-link {{ad.页面}}"><i class="nav-icon fas fa-book"></i><p>页面<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/invoice.html" class="nav-link {{ad.Invoice}}"><i class="far fa-circle nav-icon"></i><p>Invoice</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/profile.html" class="nav-link {{ad.Profile}}"><i class="far fa-circle nav-icon"></i><p>Profile</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/e-commerce.html" class="nav-link {{ad.Ecommerce}}"><i class="far fa-circle nav-icon"></i><p>Ecommerce</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/projects.html" class="nav-link {{ad.Projects}}"><i class="far fa-circle nav-icon"></i><p>Projects</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/project-add.html" class="nav-link {{ad.增加项目}}"><i class="far fa-circle nav-icon"></i><p>增加项目</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/project-edit.html" class="nav-link {{ad.编辑项目}}"><i class="far fa-circle nav-icon"></i><p>编辑项目</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/project-detail.html" class="nav-link {{ad.项目细节}}"><i class="far fa-circle nav-icon"></i><p>项目细节</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/contacts.html" class="nav-link {{ad.Contacts}}"><i class="far fa-circle nav-icon"></i><p>Contacts</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/faq.html" class="nav-link {{ad.FAQ}}"><i class="far fa-circle nav-icon"></i><p>FAQ</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/contact-us.html" class="nav-link {{ad.联系我们}}"><i class="far fa-circle nav-icon"></i><p>联系我们</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu登录和404}}">
+      <a href="#" class="nav-link {{ad.登录和404}}"><i class="nav-icon fas fa-book"></i><p>登录和404<i class="fas fa-angle-left right"></i></p></a>
+      
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="#" class="nav-link {{ad.menu登录注册}}"><i class="far fa-circle nav-icon"></i><p>登录注册<i class="fas fa-angle-left right"></i></p></a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/login.html" class="nav-link {{ad.登录}}"> <i class="far fa-circle nav-icon"></i><p>登录</p></a></li>
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/register.html" class="nav-link {{ad.注册}}"><i class="far fa-circle nav-icon"></i><p>注册</p></a></li>
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/forgot-password.html" class="nav-link {{ad.忘记密码}}"><i class="far fa-circle nav-icon"></i><p>忘记密码</p></a></li>
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/recover-password.html" class="nav-link {{ad.恢复密码}}"><i class="far fa-circle nav-icon"></i><p>恢复密码</p></a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link  {{ad.menu登录注册2}}"><i class="far fa-circle nav-icon"></i><p>L登录注册2<i class="fas fa-angle-left right"></i></p></a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/login-v2.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>Loginv2</p></a></li>
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/register-v2.html" class="nav-link {{ad.注册2}}"><i class="far fa-circle nav-icon"></i><p>Registerv2</p></a></li>
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/forgot-password-v2.html" class="nav-link {{ad.忘记密码2}}"><i class="far fa-circle nav-icon"></i><p>ForgotPasswordv2</p></a></li>
+            <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/recover-password-v2.html" class="nav-link {{ad.恢复密码2}}"><i class="far fa-circle nav-icon"></i><p>RecoverPasswordv2</p></a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/lockscreen.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>锁屏</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/legacy-user-menu.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>LegacyUser enu</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/language-menu.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>LanguageMenu</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/404.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>Error404</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/500.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>Error500</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/pace.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>Pace</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/examples/blank.html" class="nav-link {{ad.登录2}}"><i class="far fa-circle nav-icon"></i><p>空白页</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu搜索}}">
+      <a href="#" class="nav-link {{ad.搜索}}"><i class="nav-icon fas fa-search"></i><p>搜索<i class="fas fa-angle-left right"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/search/simple.html" class="nav-link {{ad.SimpleSearch}}"><i class="far fa-circle nav-icon"></i><p>SimpleSearch</p></a></li>
+        <li class="nav-item"><a href="/file_path?file_path=lte/pages/search/enhanced.html" class="nav-link {{ad.Enhanced}}"><i class="far fa-circle nav-icon"></i><p>Enhanced</p></a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item {{ad.menu多级菜单}}">
+      <a href="#" class="nav-link {{ad.多级菜单}}"><i class="nav-icon fas fa-circle"></i><p>多级菜单<i class="right fas fa-angle-left"></i></p></a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item"><a href="#" class="nav-link {{ad.Level2}}"><i class="far fa-circle nav-icon"></i><p>Level2</p></a></li>
+        <li class="nav-item"><a href="#" class="nav-link {{ad.Level22}}"><i class="far fa-circle nav-icon"></i><p>Level22<i class="right fas fa-angle-left"></i></p></a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="#" class="nav-link {{ad.Level3}}"><i class="far fa-dot-circle nav-icon"></i><p>Level3</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link {{ad.Level33}}"><i class="far fa-dot-circle nav-icon"></i><p>Level33</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link {{ad.Level333}}"><i class="far fa-dot-circle nav-icon"></i><p>Level333</p></a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="#" class="nav-link {{ad.Level2222}}"><i class="far fa-circle nav-icon"></i><p>Level2222</p></a></li>
+      </ul>
+    </li>
+
+
+
+
+
+    {% endif %}
+  </ul>
+
+
+
+</nav>
+{% endblock %}
+

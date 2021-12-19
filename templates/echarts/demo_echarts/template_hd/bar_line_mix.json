@@ -1,0 +1,78 @@
+{
+  "legend_data": [
+    "values-bar1",
+    "values-bar2",
+    "values-line1",
+    "values-line2"
+  ],
+  "xAxis_data": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h"
+  ],
+  "series": [
+    {
+      "name": "values-bar1",
+      "type": "bar",
+      "data": [
+        50,
+        30,
+        3,
+        4,
+        13,
+        45,
+        14,
+        33
+      ]
+    },
+
+    {  
+      "name": "values-bar2",
+      "type": "bar",
+      "data": [
+        50,
+        36,
+        3,
+        40,
+        13,
+        45,
+        14,
+        33
+      ]
+    },
+
+    {
+      "name": "values-line1",
+      "type": "line",
+      "data": [
+        40,
+        23,
+        13,
+        41,
+        16,
+        45,
+        15,
+        13
+      ]
+    },
+    {
+      "name": "values-line2",
+      "type": "line",
+      "data": [
+        30,
+        43,
+        13,
+        11,
+        26,
+        35,
+        25,
+        33
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+
+{% extends 'base/base02.html' %}
+
+
+{% block vbox%}
+<dialog id='update_dialog' style="border-style: none;margin:0 auto;width:400px">
+    <div class="row">
+      <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading bg-light no-border">
+                <div class="clearfix">
+                  <a href="#" class="pull-left thumb-md avatar b-3x m-r">
+                    <img src="/static/musik/images/a0.jpg" alt="...">
+                  </a>
+                  <div class="clear">
+
+                    <div class="h3 m-t-xs m-b-xs">
+                      新增或编辑 
+                      <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                    </div>
+
+                    <small class="text-muted">{{tb_name}}</small>
+                    <br>
+                    <button class="btn btn-success btn-xs" onclick="update_table_submit_do()">Submit</button>
+                    <button class="btn btn-danger btn-xs" onclick="update_table_submit_cancel()">Cancel</button>
+                  </div>
+                </div>
+            </header>
+
+
+              <form id="update_submit_form" class="bs-example form-horizontal">
+
+                {% for d in tb_info_ %}
+                    <div class="form-group">
+                      {% if d.is_nullable=='YES' %}
+                      <label class="col-lg-4 control-label">{{d.comment}}</label>
+                      {% else %}
+                      <label class="col-lg-4 control-label">{{d.comment}}(<a style="color: red">*</a>必填)</label>
+                      {% endif %}
+                      <label class="col-lg-7">
+                        <input id="dialog_{{d.name}}" class="form-control" type="{{d.f_class}}" name="{{d.name}}"  placeholder="{{d.f_class}}" value=""></input>
+                      </label>
+                    </div>
+                {%  endfor %}
+              </form>
+
+        </section>
+      </div>
+    </div>
+</dialog> 
+
+
+<dialog id='file_upload_dialog' style="border-style: none;width:450px;margin:0 auto;">
+    <div class="row">
+      <div class="col-sm-12">
+        <section class="panel panel-default">
+            <header class="panel-heading bg-light no-border">
+                <div class="clearfix">
+                  <a href="#" class="pull-left thumb-md avatar b-3x m-r">
+                    <img src="/static/musik/images/a0.jpg" alt="...">
+                  </a>
+                  <div class="clear">
+
+                    <div class="h3 m-t-xs m-b-xs">
+                      选择.xlsx,.csv文件
+                      <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                    </div>
+
+                    <small class="text-muted">{{tb_name}}</small>
+                    <br>
+                    <button class="btn btn-danger btn-xs" onclick="closeDialogElementById('file_upload_dialog')">取消</button>
+
+                  </div>
+                </div>
+            </header>
+
+            <form action="{{url_for('bulma_table.table_actions', tb_name=tb_name, action_name='upload')}}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file">
+                    <input type =submit value="上传文件">
+            </form>
+
+        </section>
+      </div>
+    </div>
+</dialog>
+
+
+  
+<div class="col-sm-12">
+  <section class="panel panel-white">
+    <header class="panel-heading">
+      <div class="field">
+          
+          <a class="btn btn-dark btn-xs" onclick="showDialogElementById('file_upload_dialog')" ><i class="fa icon-cloud-upload"></i>上传</a>
+          <a class="btn btn-info btn-xs" href="/bulma_table/table_actions?tb_name={{tb_name}}&action_name=download"><i class="fa fa-cloud-download"></i>下载</a>
+
+          <a class="btn btn-danger btn-xs" href="{{url_for('bulma_table.table_actions',tb_name=tb_name, action_name='clear')}}"><i class="fa fa-trash-o"></i>清空</a>
+          <a class="btn btn-success btn-xs" onclick="update_tb_name_tr_id('{{tb_name}}', 'row_not_need', 'add')"><i class="fa icon-plus"></i>新增</a>
+          <a class="btn btn-info btn-xs" href="{{url_for('bulma_table.db_tb',tb_name=tb_name,show_all='show_all')}}"><i class="fa icon-grid"></i>显示所有...</a>
+
+      </div>
+    </header>
+
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+            {% for col in col_list_cn %}
+            <th  style="vertical-align:middle;text-align:center;">
+
+              <a>{{col}}</a>
+              <a href="{{url_for('bulma_table.db_tb',tb_name=tb_name, sort_u=col, search_info=search_info,show_all=show_all)}}"><i class="fa fa-arrow-up"></i></a>
+              <a href="{{url_for('bulma_table.db_tb',tb_name=tb_name, sort_d=col, search_info=search_info,show_all=show_all)}}"><i class="fa fa-arrow-down"></i></a>
+
+            </th>
+            {% endfor %}
+            <th  style="vertical-align:middle;text-align:center;">编辑</th>
+            <th  style="vertical-align:middle;text-align:center;">删除</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      {% for row_i in rows %} 
+      <tr id='{{row_i.id}}'>
+          {% for col in col_list %}
+          {% if row_i[col]!='' %}<td  style="vertical-align:middle;text-align:center;">{{row_i[col]}}</td>
+          {%else%}<td  style="vertical-align:middle;text-align:center;">-</td>{%endif%}
+          {% endfor %}                
+          <td  style="vertical-align:middle;text-align:center;">
+              <button class="btn btn-success btn-xs" onclick="update_tb_name_tr_id('{{tb_name}}', '{{row_i.id}}', 'update')"><i class="fa fa-pencil"></i></button>
+          </td>
+          <td  style="vertical-align:middle;text-align:center;">
+              <button class="btn btn-danger btn-xs" onclick="delete_tb_name_tr_id('{{tb_name}}', '{{row_i.id}}')"><i class="fa fa-trash-o"></i></button>
+          </td>
+      </tr>
+      {%  endfor %} 
+      </tbody>
+          
+    </table>
+
+
+  </section>
+</div>  
+
+{% endblock %}

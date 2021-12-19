@@ -1,0 +1,193 @@
+{% extends 'base/base03_nav.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+
+
+
+
+<section class="content">
+    <a id="file_name" value="{{prj_name}}"></a>
+
+
+        <div class="row">
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">项目名称</span>
+                <span class="info-box-number">
+                  {{prj_name}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">创建时间</span>
+                <span class="info-box-number">{{prj_create_t}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">项目状态</span>
+                <span class="info-box-number">{{prj_process_text}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">运行状态</span>
+                <span class="info-box-number">{{prj_run_state_text}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#prj_manage" data-toggle="tab">项目配置</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">运行配置</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">运行结果</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="prj_manage">
+                      <a onclick="delete_prj()" ><strong><i class="fas fa-trash text-danger"></i>&ensp;删除项目</strong></a>
+                      <script>
+                          function delete_prj(){
+
+                              var prj_name = document.getElementById('file_name').attributes["value"].value;
+                              console.log('prj_name==========1', prj_name);
+
+                              res = confirm('确认删除?');                 // 确认返回true，否则返回false
+                              console.log('确认删除........');
+                              if(res){
+                                  console.log('点击了是........') 
+                                  $.ajax({
+                                      url:'/scheduling_projects/delete_prj?prj_name='+prj_name+'&tb_name=scheduling_projects____prj_main',
+                                      type:'POST',
+                                      data: '',                
+                                      success:function(res){
+                                          console.log('ajax post -delete success');
+                                          window.location.replace("/ljy_tb/db_tb?tb_name=scheduling_projects____prj_main");
+                                      },
+                                      error:function (res) {
+                                          console.log('ajax post -delete fail')
+                                      }
+                                  });        
+                              }else{
+                                  console.log('点击了否') 
+                              }    
+                          }
+                      </script>
+
+                      <hr>
+                      <span><a href="/ljy_tb/db_tb?tb_name=scheduling_projects_input1_order&prj_name={{prj_name}}&sub_tb_list_str=scheduling_projects_input1_order-scheduling_projects_input2_process-scheduling_projects_input3_person-scheduling_projects_input4_person_holiday-scheduling_projects_input5_device-scheduling_projects_input6_bom-scheduling_projects_input7_material-scheduling_projects_input8_calender-scheduling_projects_input9_workmode-scheduling_projects_output_1_workno-scheduling_projects_output_2_material_check-scheduling_projects_output_3_result_run_info&prj_type=scheduling_projects____prj_main&prj_type_short=scheduling_projects">**配置和校验数据</a></span><br>
+                    </div>
+                    <div class="tab-pane" id="activity">
+                        <form action="{{ url_for('scheduling_projects.run_scheduling_prj',prj_name=prj_name) }}" method="post" id="throughputRateForm" enctype="multipart/form-data">
+                            选择开始时间：<label for="meeting"></label><input name="start_run_time" type="datetime-local" value="{{last_run_set.start_run_time}}"/>
+                            <br><br>
+                            最大排产天数(天)：<input type="number" name="start_run_period" min="0" max="500" step="1" value="{{last_run_set.start_run_period}}">
+                            <!--                         <br><br>
+                            最大延期天数(天)：<input type="number" name="maxDelays_str" min="0" max="1000" step="1" value="{{last_run_set.maxDelays_str}}"> -->
+                            <br><br>
+                            求解时间上限(秒)：<input type="number" name="solve_max_time" min="0" max="10000" step="1" value="{{last_run_set.solve_max_time}}">
+                            <br><br>
+                            {%if prj_run_response_text=='正在运行' %}
+                            <span class="btn btn-danger "><button disabled="disabled" style="color:white;background: rgba(1,1,1,0);border:0px">运行中请等待...</button></span>&emsp;<br>
+                            {%else%}
+                            <span class="btn btn-info"><button style="color:white;background: rgba(1,1,1,0);border:0px">运行</button></span>&emsp;<br>
+                            {%endif%}
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="timeline">
+                        <span class="label btn_6 label-default">订单延期时间：{{order_delay_hour}} (小时)</span>&emsp;<br>
+                        <span class="label btn_6 label-default">订单完工时间：{{order_finish_date_time}}</span>&emsp;<br>
+                        <span class="label btn_6 label-default">算法求解耗时：{{run_cost_time_second}} (秒)</span>&emsp;<br>
+                        <span class="label btn_6 label-success"><a  href="/scheduling_projects/download_prj_output_excel_post?prj_name={{prj_name}}">导出运行结果</a></span><br>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<!--         </div>
+
+        <div class="row"> -->
+            <div class="col-md-9">
+              <div class="card">
+
+                <div class="card-header p-2">
+                  <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#g1" data-toggle="tab">产线甘特图</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#g2" data-toggle="tab">订单甘特图</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#g3" data-toggle="tab">延期对比图</a></li>
+                  </ul>
+                </div><!-- /.card-header -->
+
+                <div class="card-body">
+                  <div class="tab-content">
+
+                      <div class="tab-pane active" id="g1">
+                        <div class="col-md-12">
+                            <iframe src="/scheduling_projects/gannt_order?prj_name={{prj_name}}&html_name=workline_gannt" frameborder="0" width="100%" height="1000px"></iframe>            
+                        </div>                    
+                      </div>
+
+                      <div class="tab-pane" id="g2">
+                        <div class="col-md-12">
+                            <iframe src="/scheduling_projects/gannt_order?prj_name={{prj_name}}&select_value=all" frameborder="0" width="100%" height="1000px"></iframe>            
+                        </div>                      
+                      </div>
+
+                      <div class="tab-pane" id="g3">
+                          <div class="col-md-12">
+                              <iframe src="/scheduling_projects/gannt_order?prj_name={{prj_name}}&html_name=delivery_compare" frameborder="0" width="100%" height="1000px"></iframe>            
+                          </div>
+                      
+                      </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</section>
+</div>
+
+
+{% endblock %}
+

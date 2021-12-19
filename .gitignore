@@ -1,0 +1,7 @@
+
+__pycache__/
+**/__pycache__/
+mytemp/
+static/temp/
+config.py
+**/*.pyc

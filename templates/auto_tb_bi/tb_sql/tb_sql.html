@@ -1,0 +1,121 @@
+{% extends 'base/base03_nav.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+
+<section class="content">
+
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card  collapsed-card" >
+      <div class="card-header p-2">
+        <a href="/tb_sql/tb_sql_html?c_name={{c_name}}"><h3 class="card-title">返回GET请求</h3></a>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="card-body">
+          <form action="{{url_for('tb_sql.tb_sql_html', c_name=c_name)}}" method="POST">
+            <div class="card-body">
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">查询字段</label>
+                <input type="text" class="form-control" name="col_str" value="{{s_dict.c02_cols_str}}">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">SQL语句</label>
+                <input type="text" class="form-control" name="sql_str" value="{{s_dict.c03_sql_str}}"> 
+              </div>
+                <textarea style="height: 300px;width: 100%"></textarea>
+            </div>
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-info">查询/更新语句</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <table class="table table-striped m-b-none">
+      <thead>
+        <tr>
+            {% for col in col_list %}
+            <th  style="vertical-align:middle;text-align:center;">
+              <a>{{col}}</a>
+            </th>
+            {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody>
+      {% for row_i in r_list %} 
+      <tr id='{{row_i.id}}'>
+          {% for col in col_list %}
+          {% if row_i[col]!='' %}<td  style="vertical-align:middle;text-align:center;">{{row_i[col]}}</td>
+          {%else%}<td  style="vertical-align:middle;text-align:center;">-</td>{%endif%}
+          {% endfor %}
+      </tr>
+      {%  endfor %} 
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a class="nav-link active" href="#bar" data-toggle="tab">柱状图</a></li>
+          <li class="nav-item"><a class="nav-link" href="#pie" data-toggle="tab">饼图</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sankey" data-toggle="tab">sankey图</a></li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="bar">
+              
+          </div>
+
+          <div class="tab-pane" id="pie">
+              <form action="{{url_for('sql_note_list.work_process')}}" method="POST">
+                大约等待10s...<hr>
+                <b>注意工艺路线来自ERP数据库</b><br> 
+                con = cx.connect('wms_viewer/Wv#@Ss5qT@10.1.254.145:10058/wmsorcl')
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+          <div class="tab-pane" id="sankey">
+              <form action="{{url_for('sql_note_list.work_process')}}" method="POST">
+                大约等待10s...<hr>
+                <b>注意工艺路线来自ERP数据库</b><br> 
+                con = cx.connect('wms_viewer/Wv#@Ss5qT@10.1.254.145:10058/wmsorcl')
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">查询</button>
+                </div>
+              </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+
+</section>
+</div>
+
+
+{% endblock %}
+
